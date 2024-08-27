@@ -1,0 +1,17 @@
+.searchButton{
+    background-color: rgb(97, 97, 227);
+    color: white;
+    transition: 300ms ease;
+    padding: 0.8rem;
+    font-weight: 700;
+    border-radius: 624rem;
+}
+
+.searchButton:hover{
+    background-color: rgb(57, 57, 236);
+}
+
+.searchButton:disabled{
+    opacity: 0.5;
+    cursor: not-allowed;
+}
