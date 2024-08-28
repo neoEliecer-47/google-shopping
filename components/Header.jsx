@@ -6,6 +6,7 @@ import Link from "next/link";
 import { MagnifyingGlassIcon } from "@heroicons/react/16/solid";
 import SearchButton from "./SearchButton";
 import DropdownMenu from "./DropdownMenu";
+import { useClickOutsideDetector } from '../hooks/useClickOutsideDetector'
 
 const SORT_BY_MAP = {
   r: 'Default',
@@ -15,6 +16,9 @@ const SORT_BY_MAP = {
 }
 
 export default function Header() {
+
+const { dropMenuRef, isOpenMenu } = useClickOutsideDetector()
+
   return (
     <header className={styles.container}>
       <Link href="/">
@@ -52,9 +56,13 @@ export default function Header() {
           </div>
 
           {/* categories */}
-          <div style={{ position: "relative", zIndex: 6 }}>
-            <DropdownMenu placeholder="pages" />
-          </div>
+          
+            <div style={{display: 'flex'}}>
+            <DropdownMenu placeholder="pages" menuRef={dropMenuRef} isOpen={isOpenMenu}/>
+            
+            </div>
+            
+          
          
         </form>
       </div>
