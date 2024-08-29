@@ -17,7 +17,7 @@ const SORT_BY_MAP = {
 
 export default function Header() {
 
-const { dropMenuRef, isOpenMenu } = useClickOutsideDetector()
+
 
   return (
     <header className={styles.container}>
@@ -58,7 +58,8 @@ const { dropMenuRef, isOpenMenu } = useClickOutsideDetector()
           {/* categories */}
           
             <div style={{display: 'flex'}}>
-            <DropdownMenu placeholder="pages" menuRef={dropMenuRef} isOpen={isOpenMenu}/>
+            <DropdownMenu placeholder="pages"/>
+            <DropdownMenu placeholder="administration"/>
             
             </div>
             

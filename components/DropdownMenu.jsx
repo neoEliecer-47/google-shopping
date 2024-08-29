@@ -1,7 +1,9 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import styles from "./DropdownMenu.module.css";
-import { ChevronDownIcon, CheckIcon } from "@heroicons/react/24/solid";
+import { CheckIcon } from "@heroicons/react/24/solid";
+import { ChevronDownIcon } from '@heroicons/react/24/outline'
 import classNames from "classnames";
+import { useClickOutsideDetector } from "@/hooks/useClickOutsideDetector";
 
 const data = [
   {
@@ -15,28 +17,46 @@ const data = [
   },
 ];
 
-export default function DropdownMenu({ placeholder, menuRef, isOpen }) {
+export default function DropdownMenu({ placeholder }) {
   const [open, setOpen] = useState(false);
   const [option, setOption] = useState(null);
 
+  const { dropMenuRef, isClickOutside, setIsClickOutside } = useClickOutsideDetector()
+
+  function handleOpenOptions(e){
+    e.stopPropagation();
+    setOpen(!open)
+  }
+
+  useEffect(()=>{
+    if(isClickOutside) {
+      setOpen(false)
+      setIsClickOutside(false)
+    }
+    
+  }, [isClickOutside])
+
+
+
   return (
     // <div style={{ position: "relative", zIndex: 6, display: 'flex' }}>
-    <section style={{ width: "8rem", cursor: "pointer" }} >
+    <section style={{ width: "8rem", cursor: "pointer" }}  ref={dropMenuRef}>
       <div
         className={styles.placeholderContainer}
-        onClick={() => setOpen(!open)}
+        onClick={handleOpenOptions}
       >
         <h2 className={styles.placeholder}>{placeholder}</h2>
         <ChevronDownIcon
           className={classNames(styles.icon, open && styles.iconRotate)}
+          
         />
       </div>
       <div
         className={styles.options}
         style={{ padding: `${open ? "20px 0px" : "0px"}`, width: "8rem" }}
-        ref={menuRef}
+        
       >
-        {open || isOpen &&
+        {open &&
           data.map(({ number }, index) => (
             <div
               style={{
@@ -47,6 +67,7 @@ export default function DropdownMenu({ placeholder, menuRef, isOpen }) {
               }}
               onClick={() => setOption(index)}
               className={styles.containerO}
+             
             >
               <div style={{ width: "1.3rem" }}>
                 {option === index && <CheckIcon className={styles.icon} />}

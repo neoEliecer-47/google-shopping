@@ -1,12 +1,13 @@
 import { useEffect, useRef, useState } from "react";
 
 export function useClickOutsideDetector() {
-  const [isOpenMenu, setIsOpenMenu] = useState(null);
+  const [isClickOutside, setIsClickOutside] = useState(false);
   const dropMenuRef = useRef(null);
+  
 
   const handleOutsideClick = (event) => {
     if (dropMenuRef.current && !dropMenuRef.current.contains(event.target)) {
-      setIsOpenMenu(false);
+      setIsClickOutside(true);
     }
   };
 
@@ -17,5 +18,5 @@ export function useClickOutsideDetector() {
     };
   }, []);
 
-  return { dropMenuRef, isOpenMenu };
+  return { dropMenuRef, isClickOutside, setIsClickOutside };
 }
