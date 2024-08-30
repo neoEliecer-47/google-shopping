@@ -5,7 +5,7 @@ import { ChevronDownIcon } from "@heroicons/react/24/outline";
 import classNames from "classnames";
 import { useClickOutsideDetector } from "@/hooks/useClickOutsideDetector";
 
-export default function DropdownMenu({ placeholder, data }) {
+export default function DropdownMenu({ data }) {
   const [open, setOpen] = useState(false);
   const [option, setOption] = useState(null);
 
@@ -21,6 +21,12 @@ export default function DropdownMenu({ placeholder, data }) {
     return typeof item === "object" ? Object.values(item) : item;
   }
 
+  function buildPlaceholder(){
+    let item = !option ? data[0] : data[option]
+    let placeholder = ''
+    return placeholder = getValues(item)
+  }
+
   useEffect(() => {
     if (isClickOutside) {
       setOpen(false);
@@ -32,7 +38,7 @@ export default function DropdownMenu({ placeholder, data }) {
     // <div style={{ position: "relative", zIndex: 6, display: 'flex' }}>
     <section style={{ width: "8rem", cursor: "pointer" }} ref={dropMenuRef}>
       <div className={styles.placeholderContainer} onClick={handleOpenOptions}>
-        <h2 className={styles.placeholder}>{placeholder}</h2>
+        <h2 className={styles.placeholder}>{buildPlaceholder()}</h2>
         <ChevronDownIcon
           className={classNames(styles.icon, open && styles.iconRotate)}
         />
