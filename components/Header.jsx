@@ -9,11 +9,24 @@ import DropdownMenu from "./DropdownMenu";
 import { useClickOutsideDetector } from '../hooks/useClickOutsideDetector'
 
 const SORT_BY_MAP = {
-  r: 'Default',
+ 
   rv: 'By Review',
   p: 'By Price (low to high)',
   pd: 'By Price (high to low)'
 }
+
+const data = [
+  {
+    number: "1",
+  },
+  {
+    number: "2",
+  },
+  {
+    number: "3",
+  },
+];
+
 
 export default function Header() {
 
@@ -58,8 +71,9 @@ export default function Header() {
           {/* categories */}
           
             <div style={{display: 'flex'}}>
-            <DropdownMenu placeholder="pages"/>
-            <DropdownMenu placeholder="administration"/>
+            <DropdownMenu placeholder="pages" data={data}/>
+            <DropdownMenu placeholder="Default" data={Object.values(SORT_BY_MAP)}/>
+            
             
             </div>
             

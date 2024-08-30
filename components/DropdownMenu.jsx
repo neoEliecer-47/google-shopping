@@ -1,63 +1,48 @@
 import { useEffect, useState } from "react";
 import styles from "./DropdownMenu.module.css";
 import { CheckIcon } from "@heroicons/react/24/solid";
-import { ChevronDownIcon } from '@heroicons/react/24/outline'
+import { ChevronDownIcon } from "@heroicons/react/24/outline";
 import classNames from "classnames";
 import { useClickOutsideDetector } from "@/hooks/useClickOutsideDetector";
 
-const data = [
-  {
-    number: "1",
-  },
-  {
-    number: "2",
-  },
-  {
-    number: "3",
-  },
-];
-
-export default function DropdownMenu({ placeholder }) {
+export default function DropdownMenu({ placeholder, data }) {
   const [open, setOpen] = useState(false);
   const [option, setOption] = useState(null);
 
-  const { dropMenuRef, isClickOutside, setIsClickOutside } = useClickOutsideDetector()
+  const { dropMenuRef, isClickOutside, setIsClickOutside } =
+    useClickOutsideDetector();
 
-  function handleOpenOptions(e){
+  function handleOpenOptions(e) {
     e.stopPropagation();
-    setOpen(!open)
+    setOpen(!open);
   }
 
-  useEffect(()=>{
-    if(isClickOutside) {
-      setOpen(false)
-      setIsClickOutside(false)
+  function getValues(item) {
+    return typeof item === "object" ? Object.values(item) : item;
+  }
+
+  useEffect(() => {
+    if (isClickOutside) {
+      setOpen(false);
+      setIsClickOutside(false);
     }
-    
-  }, [isClickOutside])
-
-
+  }, [isClickOutside]);
 
   return (
     // <div style={{ position: "relative", zIndex: 6, display: 'flex' }}>
-    <section style={{ width: "8rem", cursor: "pointer" }}  ref={dropMenuRef}>
-      <div
-        className={styles.placeholderContainer}
-        onClick={handleOpenOptions}
-      >
+    <section style={{ width: "8rem", cursor: "pointer" }} ref={dropMenuRef}>
+      <div className={styles.placeholderContainer} onClick={handleOpenOptions}>
         <h2 className={styles.placeholder}>{placeholder}</h2>
         <ChevronDownIcon
           className={classNames(styles.icon, open && styles.iconRotate)}
-          
         />
       </div>
       <div
         className={styles.options}
-        style={{ padding: `${open ? "20px 0px" : "0px"}`, width: "8rem" }}
-        
+        style={{ padding: `${open ? "10px 0px" : "0px"}`, width: "8rem" }}
       >
         {open &&
-          data.map(({ number }, index) => (
+          data.map((item, index) => (
             <div
               style={{
                 margin: "0px",
@@ -67,12 +52,11 @@ export default function DropdownMenu({ placeholder }) {
               }}
               onClick={() => setOption(index)}
               className={styles.containerO}
-             
             >
               <div style={{ width: "1.3rem" }}>
                 {option === index && <CheckIcon className={styles.icon} />}
               </div>
-              <h4 className={styles.optionButton}>numero - {number}</h4>
+              <h4 className={styles.optionButton}>{getValues(item)}</h4>
             </div>
           ))}
       </div>
