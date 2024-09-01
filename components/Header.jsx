@@ -67,7 +67,7 @@ export default function Header() {
           {/* categories */}
 
           <div style={{ display: "flex" }}>
-            <DropdownMenu placeholder="pages" data={data} />
+            <DropdownMenu placeholder="pages" data={data} money={true}/>
             <DropdownMenu placeholder="Sort" data={Object.values(SORT_BY_MAP)}
             />
           </div>

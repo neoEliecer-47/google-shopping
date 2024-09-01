@@ -9,8 +9,6 @@ export default function DropdownMenu({ placeholder, data, money = false }) {
   const [open, setOpen] = useState(false);
   const [option, setOption] = useState(null);
 
-  
-
   const { dropMenuRef, isClickOutside, setIsClickOutside } =
     useClickOutsideDetector();
 
@@ -19,14 +17,18 @@ export default function DropdownMenu({ placeholder, data, money = false }) {
     setOpen(!open);
   }
 
-  function getValues(item) {
+  function getValues(item, index) {
+    if (money && index === 0) {
+      return "No Minimun";
+    }
+
     return typeof item === "object" ? Object.values(item) : item;
   }
 
   function buildPlaceholder() {
     let item = data[option];
     let placeholder = "";
-    return (placeholder = getValues(item));
+    return (placeholder = getValues(item, option));
   }
 
   useEffect(() => {
@@ -66,7 +68,10 @@ export default function DropdownMenu({ placeholder, data, money = false }) {
               <div style={{ width: "1.3rem" }}>
                 {option === index && <CheckIcon className={styles.icon} />}
               </div>
-              <h4 className={styles.optionButton}>{getValues(item)}</h4>
+              <h4 className={styles.optionButton}>
+                {money && index !== 0 && "$"}
+                {getValues(item, index)}
+              </h4>
             </div>
           ))}
       </div>
