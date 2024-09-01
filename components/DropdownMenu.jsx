@@ -28,7 +28,9 @@ export default function DropdownMenu({ placeholder, data, money = false }) {
   function buildPlaceholder() {
     let item = data[option];
     let placeholder = "";
-    return (placeholder = getValues(item, option));
+    placeholder = getValues(item, option)
+    if(placeholder.length < 10) return placeholder
+    else return placeholder.slice(0, 10) + '...'
   }
 
   useEffect(() => {
