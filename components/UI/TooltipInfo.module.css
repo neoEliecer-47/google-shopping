@@ -1,0 +1,23 @@
+.tooltipContainer{
+    position: absolute;
+    padding: 0;
+    margin: 0;
+    display: inline-block;
+    max-height: 1rem;
+    min-width: 3rem;
+    background-color: blueviolet;
+    transition: all 1s ease-in-out;
+}
+
+.tooltipText{
+  
+    font-size: 0.7rem;
+    font-weight: bold;
+    color: rgb(67, 61, 61);
+    background-color: white;
+    left: 50%;
+    top: 0;
+    transform: translate(-50%);
+    white-space: nowrap;
+    transition: all 1s ease-in-out;
+}

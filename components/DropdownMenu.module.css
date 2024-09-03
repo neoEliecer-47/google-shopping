@@ -1,8 +1,7 @@
-.dropContainer {
-  width: 4rem;
-}
+
 
 .placeholderContainer {
+  position: relative;
   display: flex;
   margin: auto;
   justify-content: center;
@@ -12,23 +11,30 @@
   transition: all 300ms ease;
 }
 
+.placeholderContainerSelected > *{
+  color: #202124 !important;
+  stroke-width: 3px;
+}
+
 .options {
   position: absolute;
   background-color: white;
   border-radius: 0.5rem;
-  width: 8rem;
+ 
   transition: all 300ms ease-in-out;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
 }
 
 .optionButton {
   background-color: rgb(255, 255, 255 / 0.5);
-  padding: 10px 0px;
-  width: 100%;
+  overflow-wrap: anywhere;
+  padding: 10px 0;
+  width: 8rem;
   color: rgb(107 114 128);
-  margin: 0;
-
-  max-width: 8rem;
+  margin: 0 4px;
+  margin-right: 6px;
+  font-size: 0.8rem;
+  
 }
 
 .containerO:hover {

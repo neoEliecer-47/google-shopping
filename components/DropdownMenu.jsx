@@ -4,10 +4,12 @@ import { CheckIcon } from "@heroicons/react/24/solid";
 import { ChevronDownIcon } from "@heroicons/react/24/outline";
 import classNames from "classnames";
 import { useClickOutsideDetector } from "@/hooks/useClickOutsideDetector";
+import TooltipInfo from "./UI/TooltipInfo";
 
 export default function DropdownMenu({ placeholder, data, money = false }) {
   const [open, setOpen] = useState(false);
   const [option, setOption] = useState(null);
+  
 
   const { dropMenuRef, isClickOutside, setIsClickOutside } =
     useClickOutsideDetector();
@@ -21,16 +23,22 @@ export default function DropdownMenu({ placeholder, data, money = false }) {
     if (money && index === 0) {
       return "No Minimun";
     }
-
-    return typeof item === "object" ? Object.values(item) : item;
+    if(item instanceof Object){
+      const element = Object.values(item)[0]
+      console.log(element)
+      return element
+    }
+    
+    return item
+    
   }
 
   function buildPlaceholder() {
     let item = data[option];
     let placeholder = "";
-    placeholder = getValues(item, option)
-    if(placeholder.length < 10) return placeholder
-    else return placeholder.slice(0, 10) + '...'
+    placeholder = getValues(item, option);
+    
+    return placeholder.slice(0, 10) + `${placeholder.length > 10 ? "..." : ""}`;
   }
 
   useEffect(() => {
@@ -43,7 +51,16 @@ export default function DropdownMenu({ placeholder, data, money = false }) {
   return (
     // <div style={{ position: "relative", zIndex: 6, display: 'flex' }}>
     <section style={{ width: "8rem", cursor: "pointer" }} ref={dropMenuRef}>
-      <div className={styles.placeholderContainer} onClick={handleOpenOptions}>
+      
+        
+      
+        
+     
+      <div
+        className={classNames(styles.placeholderContainer, option && styles.placeholderContainerSelected)}
+        onClick={handleOpenOptions}
+        
+      >
         <h2 className={styles.placeholder}>
           {option === null ? placeholder : buildPlaceholder()}
         </h2>
@@ -63,6 +80,7 @@ export default function DropdownMenu({ placeholder, data, money = false }) {
                 display: "flex",
                 justifyContent: "space-between",
                 alignItems: "center",
+               
               }}
               onClick={() => setOption(index)}
               className={styles.containerO}
@@ -70,10 +88,10 @@ export default function DropdownMenu({ placeholder, data, money = false }) {
               <div style={{ width: "1.3rem" }}>
                 {option === index && <CheckIcon className={styles.icon} />}
               </div>
-              <h4 className={styles.optionButton}>
+              <div className={styles.optionButton} >
                 {money && index !== 0 && "$"}
                 {getValues(item, index)}
-              </h4>
+              </div>
             </div>
           ))}
       </div>

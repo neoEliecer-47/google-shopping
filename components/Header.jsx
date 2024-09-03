@@ -6,7 +6,7 @@ import Link from "next/link";
 import { MagnifyingGlassIcon } from "@heroicons/react/16/solid";
 import SearchButton from "./SearchButton";
 import DropdownMenu from "./DropdownMenu";
-import { useClickOutsideDetector } from "../hooks/useClickOutsideDetector";
+
 
 const SORT_BY_MAP = {
   r: "Default",
@@ -15,16 +15,19 @@ const SORT_BY_MAP = {
   pd: "By Price (high to low)",
 };
 
-const data = [
-  {
-    number: "1",
-  },
-  {
-    number: "2",
-  },
-  {
-    number: "3",
-  },
+const dat2a = [
+  
+    {smt: "1"},
+  
+  
+    {smt: "2"},
+  
+  
+   { smt: "38787 8555 555ju yfghb"},
+  
+  
+    {smt: "asdasdasdadasd+65454"},
+  
 ];
 
 export default function Header() {
@@ -67,9 +70,8 @@ export default function Header() {
           {/* categories */}
 
           <div style={{ display: "flex" }}>
-            <DropdownMenu placeholder="pages" data={data} money={true}/>
-            <DropdownMenu placeholder="Sort" data={Object.values(SORT_BY_MAP)}
-            />
+            <DropdownMenu placeholder="Pages" data={dat2a} money={true}/>
+            <DropdownMenu placeholder="Sort" data={Object.values(SORT_BY_MAP)} />
           </div>
         </form>
       </div>
