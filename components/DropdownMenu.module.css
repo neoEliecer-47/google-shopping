@@ -22,7 +22,7 @@
   left: 40%;
   bottom: -40%;
   border: 9px solid;
-  border-color: rgb(214, 160, 234) transparent transparent transparent;
+  border-color: rgb(185, 178, 188) transparent transparent transparent;
 }
 
 .placeholderContainer:hover .tooltipContainer {
