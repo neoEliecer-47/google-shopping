@@ -11,8 +11,8 @@ export default function DropdownMenu({ placeholder, data, money = false }) {
   const [open, setOpen] = useState(false);
   const [option, setOption] = useState(null);
 
-
-  const { dropMenuRef, isClickOutside, setIsClickOutside } = useClickOutsideDetector();
+  const { dropMenuRef, isClickOutside, setIsClickOutside } =
+    useClickOutsideDetector();
 
   function handleOpenOptions(e) {
     e.stopPropagation();
@@ -46,21 +46,19 @@ export default function DropdownMenu({ placeholder, data, money = false }) {
   return (
     // <div style={{ position: "relative", zIndex: 6, display: 'flex' }}>
     <section style={{ width: "8rem", cursor: "pointer" }} ref={dropMenuRef}>
-      
-        
-
-
-<div
+      <div
         className={classNames(
           styles.placeholderContainer,
           option && styles.placeholderContainerSelected
         )}
         onClick={handleOpenOptions}
       >
-        {buildPlaceholder('tooltip')?.length > 10 && (
+        {buildPlaceholder("tooltip")?.length > 10 && (
           <div className={styles.tooltipContainer}>
-          <span className={""}>{buildPlaceholder('tooltip')}</span>
-        </div>
+            <span className={styles.tooltipText}>
+              {buildPlaceholder("tooltip")}
+            </span>
+          </div>
         )}
 
         <h2 className={styles.placeholder}>
