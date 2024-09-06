@@ -7,12 +7,34 @@ import { ChevronDownIcon } from "@heroicons/react/24/outline";
 import classNames from "classnames";
 import { useClickOutsideDetector } from "@/hooks/useClickOutsideDetector";
 
-export default function DropdownMenu({ placeholder, data, money = false }) {
+
+
+export default function DropdownMenu({ placeholder, data, money = false, onValue, paramValue }) {
   const [open, setOpen] = useState(false);
   const [option, setOption] = useState(null);
 
   const { dropMenuRef, isClickOutside, setIsClickOutside } =
     useClickOutsideDetector();
+
+  function checkIndexInData(value){
+   
+    const string = getValues(value)
+    let indexFromParam = data.findIndex((item) => {
+      let newItem = getValues(item)
+      return newItem === string//returns the index in the array when these two values coincide one another
+    })
+    setOption(indexFromParam)
+  }  
+
+  function buildValuesIfParams(placeholderIfParam, check){
+    const params = new URLSearchParams(window.location.search)
+    if(params.size === 0 && placeholderIfParam) return placeholder
+   
+    if(params.size === 0) return
+    const value = params.get(paramValue)
+    if(params && !option && check) return checkIndexInData(value)
+    return value
+  }
 
   function handleOpenOptions(e) {
     e.stopPropagation();
@@ -24,8 +46,10 @@ export default function DropdownMenu({ placeholder, data, money = false }) {
       return "No Minimun";
     }
     // if(item instanceof Object)
-
     return typeof item === "object" ? Object.values(item)[0] : item;
+    
+    
+    
   }
 
   function buildPlaceholder(tooltip) {
@@ -33,7 +57,8 @@ export default function DropdownMenu({ placeholder, data, money = false }) {
     let placeholder = "";
     placeholder = getValues(item, option);
     if (tooltip) return placeholder;
-    return placeholder.slice(0, 10) + `${placeholder.length > 10 ? "..." : ""}`;
+    onValue(placeholder)
+    return placeholder?.slice(0, 10) + `${placeholder?.length > 10 ? "..." : ""}`;
   }
 
   useEffect(() => {
@@ -43,9 +68,14 @@ export default function DropdownMenu({ placeholder, data, money = false }) {
     }
   }, [isClickOutside]);
 
+  useEffect(()=>{
+   //use setOption here when there are params
+   buildValuesIfParams("",'check')
+  }, [])
+
   return (
     // <div style={{ position: "relative", zIndex: 6, display: 'flex' }}>
-    <section style={{ width: "8rem", cursor: "pointer" }} ref={dropMenuRef}>
+    <section style={{ width: "6rem", cursor: "pointer" }} ref={dropMenuRef}>
       <div
         className={classNames(
           styles.placeholderContainer,
@@ -62,7 +92,7 @@ export default function DropdownMenu({ placeholder, data, money = false }) {
         )}
 
         <h2 className={styles.placeholder}>
-          {option === null ? placeholder : buildPlaceholder()}
+          {option === null ? buildValuesIfParams('placeholderIfParam') : buildPlaceholder()}
         </h2>
         <ChevronDownIcon
           className={classNames(styles.icon, open && styles.iconRotate)}

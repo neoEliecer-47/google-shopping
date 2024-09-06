@@ -6,6 +6,9 @@ import Link from "next/link";
 import { MagnifyingGlassIcon } from "@heroicons/react/16/solid";
 import SearchButton from "./SearchButton";
 import DropdownMenu from "./DropdownMenu";
+import Avatar from "react-avatar";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
 
 
 const SORT_BY_MAP = {
@@ -15,22 +18,39 @@ const SORT_BY_MAP = {
   pd: "By Price (high to low)",
 };
 
-const dat2a = [
+const numPages = [
   
-    {smt: "1"},
-  
-  
-    {smt: "2"},
+    {page: "page 1"},
   
   
-   { smt: "38787 8555 555ju yfghb"},
+    {page: "page 2"},
   
   
-    {smt: "asdasdasdadasd+65454"},
+    {page: "page 3"},
+  
+  
+    {page: "page 4"},
   
 ];
 
-export default function Header() {
+const minPriceData  = {
+  price: '0',
+  price2: '100',
+  price3: '200',
+  price4: '300',
+  price5: '400',
+}
+
+export default function HeminPriceader() {
+
+  const [pages, setPages] = useState('')
+  const [sortBy, setSortBy] = useState('r')
+  const [minPrice, setMinPrice] = useState(0)
+  const [maxPrice, setMaxPrice] = useState(0)
+
+  const router = useRouter()
+ 
+
   return (
     <header className={styles.container}>
       <Link href="/">
@@ -44,9 +64,22 @@ export default function Header() {
         />
       </Link>
 
-      <div>
+      <div className={styles.containerFormAndMenus}>
         {/* FORM */}
-        <form>
+        <form action={formData => {
+          const searchTerm = formData.get('searchTerm')
+
+          if(!formData.get('searchTerm')) return;
+
+          const params = new URLSearchParams()
+
+          if(pages) params.set('pages', pages.toString());
+          if(sortBy) params.set('sort_by', sortBy.toString());
+          if(minPrice) params.set('min_price', minPrice.toString());
+          if(maxPrice) params.set('max_price', maxPrice.toString());
+
+          router.push(`/search/${searchTerm}?${params.toString()}`)
+        }}>
           <div className={styles.containerBox}>
             <div className={styles.containerInput}>
               <MagnifyingGlassIcon
@@ -69,11 +102,16 @@ export default function Header() {
 
           {/* categories */}
 
-          <div style={{ display: "flex" }}>
-            <DropdownMenu placeholder="Pages" data={dat2a} money={true}/>
-            <DropdownMenu placeholder="Sort" data={Object.values(SORT_BY_MAP)} />
+          <div className={styles.containerDropMenus}>
+            <DropdownMenu placeholder="Pages" data={numPages} onValue={setPages} paramValue='pages'/>
+            <DropdownMenu placeholder="Sort" data={Object.values(SORT_BY_MAP)} onValue={setSortBy} paramValue='sort_by'/>
+            <DropdownMenu placeholder="Min Price" data={Object.values(minPriceData)} money onValue={setMinPrice} paramValue='min_price'/>
           </div>
         </form>
+      </div>
+
+      <div>
+        <Avatar name="Eliecer Sanchez" round size="50"/>
       </div>
     </header>
   );

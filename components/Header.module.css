@@ -1,44 +1,59 @@
 .container {
   width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .containerBox {
   display: flex;
   align-items: center;
-  gap: 0.7rem;
-  width: 100%;
-  padding: 0 10px;
+  justify-content: center;
+  gap: 0.1rem;
+
+  padding: 0 5px;
+  padding-bottom: 5px;
+  padding-top: 8px;
 }
 
+.containerFormAndMenus {
+  width: 100%;
+}
+.containerDropMenus {
+  display: flex;
+  padding: 0.3rem;
+}
+
+.containerInput {
+  flex-grow: 1;
+  display: flex;
+  align-items: center;
+  margin: 0 5px;
+  box-shadow: 0 1px 10px 3px rgb(0 0 0 / 0.01), 0 8px 20px -6px rgb(0 0 0 / 0.1);
+
+  border-radius: 624rem;
+  border-width: 0px;
+  padding: 8px 8px;
+  background-color: white;
+
+  border: 0.5px solid rgb(216, 211, 211);
+  transition: all 200ms ease;
+}
 .image {
   object-fit: contain;
   margin-right: 10px;
 }
-.containerInput {
-  display: flex;
-  align-items: center;
-  margin: 0 10px;
-  box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1),
-    0 8px 10px -6px rgb(0 0 0 / 0.1);
-  border-radius: 624rem;
-  border-width: 0px;
-  padding: 8px 12px;
-  background-color: white;
-  flex: 1;
-  border: 0.5px solid rgb(216, 211, 211);
-  transition: 200ms ease;
-}
 
 .containerInput:hover {
-  box-shadow: 0 20px 5px 5px rgb(0 0 0 / 0.1),
-    0 8px 20px -6px rgb(0 0 0 / 0.1);
+  box-shadow: 0 1px 10px 3px rgb(0 0 0 / 0.1), 0 8px 20px -6px rgb(0 0 0 / 0.1);
 }
 
 .inputSearch {
   border: none;
-  transition: 1s ease;
+  transition: all 1s ease;
   flex: 1;
   padding: 5px;
+  flex-grow: 1;
 }
 
 .inputSearch:focus {
@@ -58,5 +73,9 @@
 
   .container {
     max-width: 60rem;
+    flex-direction: row;
+    align-items: start;
+    padding: 15px;
+    padding-bottom: 10px;
   }
 }
